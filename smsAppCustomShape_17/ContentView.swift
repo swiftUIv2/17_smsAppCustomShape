@@ -95,9 +95,30 @@ struct Home: View {
                             })
                         }
                         .padding()
+                        
+                        ForEach(data, id: \.groupName){gData in
+                            
+                            // groupName ...
+                            HStack {
+                                Text(gData.groupName)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                
+                                Spacer(minLength: 0)
+                            }
+                            .padding(.horizontal)
+                            
+                            // groupData ...
+                            ForEach(gData.groupData){ chatData in
+                                
+                                // chat View...
+                                ChatView(chatData: chatData)
+                            }
+                        }
                     }
                     .padding(.vertical)
                 })
+//                .clipShape(CustomCorner(corner: .topRight, size: 65))
             }
             
         }
@@ -156,6 +177,39 @@ struct CustomCorner: Shape {
     }
 }
 
+////////////////////     ChatView    \\\\\\\\\\\\\\\\\\\\
+struct ChatView: View {
+    
+    var chatData: Chat
+    
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(chatData.image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 55, height: 55)
+                .cornerRadius(10)
+            
+            VStack(alignment: .leading, spacing: 8, content: {
+                Text(chatData.name)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                
+                Text(chatData.msg)
+                    .font(.caption)
+                    .lineLimit(1)
+            })
+            
+            Spacer(minLength: 0)
+            
+            Text(chatData.time)
+                .font(.system(size: 15))
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+        }
+        .padding(.horizontal)
+    }
+}
+
 
 ////////////////////      Model and sample data   \\\\\\\\\\\\\\\\\\\\
 struct Chat: Identifiable {
@@ -166,11 +220,29 @@ struct Chat: Identifiable {
     var time: String
 }
 
+// we are going to do custom grouping of views...
 struct HomeData {
     var groupName: String
     var groupData: [Chat]
 }
 
 var FriendsChat: [Chat] = [
-Chat(name: "memoji1", image: <#T##String#>, msg: <#T##String#>, time: <#T##String#>)
+    Chat(name: "jo1", image: "memoji1", msg: "hey everyone !!!", time: "03:23"),
+    Chat(name: "jo2", image: "memoji2", msg: "hey everyone !!!", time: "04:23"),
+    Chat(name: "jo3", image: "memoji3", msg: "hey everyone !!!", time: "05:23"),
+    Chat(name: "jo4", image: "memoji4", msg: "hey everyone !!!", time: "02:23"),
+    Chat(name: "jo5", image: "memoji5", msg: "hey everyone !!!", time: "01:23")
+]
+
+var GroupChat: [Chat] = [
+    Chat(name: "groupjo1", image: "memoji1", msg: "hey everyone !!!", time: "03:23"),
+    Chat(name: "groupjo2", image: "memoji2", msg: "hey everyone !!!", time: "04:23"),
+    Chat(name: "groupjo3", image: "memoji3", msg: "hey everyone !!!", time: "05:23")
+]
+
+var data = [
+    //group1
+    HomeData(groupName: "Friends", groupData: FriendsChat),
+    //group2
+    HomeData(groupName: "Group Message", groupData: GroupChat)
 ]
