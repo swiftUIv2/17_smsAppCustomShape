@@ -1,7 +1,7 @@
 # 17_smsAppCustomShape
 
 
-<img src="https://media.giphy.com/media/7Zcf2wAOnYBpabusLO/giphy.gif" width="390" height="844"/>  
+<img src="https://media.giphy.com/media/f8ocWg5e3uIAv7FeGX/giphy.gif" width="390" height="844"/>  
 
 
 
